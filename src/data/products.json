@@ -1,0 +1,19 @@
+[
+  {
+    "sku": "TT00001",
+    "grade": "A",
+    "category": "hoodie",
+    "brand": "Puma",
+    "title": "Puma Sweatshirt Hoodie",
+    "size": "XS",
+    "colour": "Black",
+    "price": 4,
+    "status": "A",
+    "dateAdded": "2026-03-17",
+    "images": [
+      "/products/TT00001/1.JPEG",
+      "/products/TT00001/2.JPEG",
+      "/products/TT00001/3.JPEG"
+    ]
+  }
+]
