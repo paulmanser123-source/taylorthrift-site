@@ -14,7 +14,7 @@ const linkStyle = {
   fontSize: "16px"
 };
 
-function Layout({ children }) {
+function Layout({ children, cart }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -101,6 +101,9 @@ function Layout({ children }) {
   <Link to="/about" style={linkStyle}>About Us</Link>
   <Link to="/contact" style={linkStyle}>Contact Us</Link>
   <Link to="/donate" style={linkStyle}>Make a Donation</Link>
+  <Link to="/cart" style={linkStyle}>
+  Cart ({cart?.length || 0})
+</Link>
 </nav>
           
 
@@ -167,11 +170,12 @@ function Layout({ children }) {
 
       {/* LINKS */}
       {[
-        { name: "Home", path: "/" },
-        { name: "About Us", path: "/about" },
-        { name: "Contact Us", path: "/contact" },
-        { name: "Make a Donation", path: "/donate" }
-      ].map((item, i) => (
+  { name: "Home", path: "/" },
+  { name: "About Us", path: "/about" },
+  { name: "Contact Us", path: "/contact" },
+  { name: "Make a Donation", path: "/donate" },
+  { name: "Cart", path: "/cart" }
+].map((item, i) => (
         <Link
           key={item.name}
           to={item.path}
@@ -721,7 +725,7 @@ const removeFromCart = (index) => {
   <Route
     path="/cart"
     element={
-      <Layout>
+      <Layout cart={cart}>
         <CartPage
           cart={cart}
           removeFromCart={removeFromCart}
