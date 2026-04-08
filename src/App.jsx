@@ -513,34 +513,35 @@ function ProductPage({ products }) {
 
   {/* BUY BUTTON */}
   <button
-    style={{
-      marginTop: "20px",
-      padding: "12px 20px",
-      background: "#c4a484",
-      border: "none",
-      color: "black",
-      fontWeight: "bold",
-      cursor: "pointer",
-      width: "100%"
-    }}
-    onClick={async () => {
-  const res = await fetch("/api/create-checkout-session", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ product }) // ✅ IMPORTANT
-  });
+  style={buttonStyle}
+  onClick={async () => {
+    try {
+      const res = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cart: [product],
+        }),
+      });
 
-  const data = await res.json();
+      const data = await res.json();
 
-  if (data.url) {
-    window.location.href = data.url;
-  }
-}}
-  >
-    Buy It Now
-  </button>
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Stripe error");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Checkout failed");
+    }
+  }}
+>
+  Buy Now
+</button>
+
 </div>
     </div>
   );
