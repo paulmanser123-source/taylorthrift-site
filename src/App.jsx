@@ -92,13 +92,19 @@ function Layout({ children, cart }) {
   style={{
     marginTop: "10px",
     display: "flex",
+    flexWrap: "wrap",
     justifyContent: "center",
-    gap: "20px",
-    background: "red"
+    gap: "10px"
   }}
 >
-  <Link to="/">Home</Link>
-  <Link to="/cart">CART TEST</Link>
+  <Link to="/" style={linkStyle}>Home</Link>
+  <Link to="/about" style={linkStyle}>About Us</Link>
+  <Link to="/contact" style={linkStyle}>Contact Us</Link>
+  <Link to="/donate" style={linkStyle}>Make a Donation</Link>
+
+  <Link to="/cart" style={linkStyle}>
+    🛒 Cart ({Array.isArray(cart) ? cart.length : 0})
+  </Link>
 </nav>
           
 
