@@ -485,7 +485,7 @@ function ProductPage({ products }) {
           style={mainImageStyle}
           onError={(e) => {
   e.target.onerror = null; // 🔥 stops loop
-  e.target.src = "/placeholder.JPEG";
+  e.target.src = "/placeholder.jpg";
 }}
         />
 
@@ -522,8 +522,11 @@ function ProductPage({ products }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          cart: [product],
-        }),
+  product: {
+    title: product.name,
+    price: Number(product.price),
+  },
+}),
       });
 
       const data = await res.json();
