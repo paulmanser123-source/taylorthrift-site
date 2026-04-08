@@ -1,30 +1,27 @@
 function CartPage({ cart, removeFromCart }) {
-  const total = cart.reduce(
-    (sum, item) => sum + Number(item.price),
-    0
-  );
-const handleCheckout = async () => {
-  try {
-    const res = await fetch("/api/create-checkout-session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ cart }),
-    });
 
-    const data = await res.json();
+  const handleCheckout = async () => {
+    try {
+      const res = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cart }),
+      });
 
-    if (data.url) {
-      window.location.href = data.url;
-    } else {
-      alert("Checkout error");
+      const data = await res.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Checkout error");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Checkout failed");
     }
-  } catch (err) {
-    console.error(err);
-    alert("Checkout failed");
-  }
-};
+  };
   return (
     <div style={{ padding: "20px" }}>
       <h1>Your Cart</h1>
@@ -45,10 +42,7 @@ const handleCheckout = async () => {
     </div>
   );
 }
-<button
-  onClick={handleCheckout}
-  style={{ marginTop: "20px" }}
->
+<button onClick={handleCheckout}>
   Checkout
 </button>
 export default CartPage;
