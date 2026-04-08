@@ -10,7 +10,16 @@ function CartPage({ cart, removeFromCart }) {
         body: JSON.stringify({ cart }),
       });
 
-      const data = await res.json();
+      const text = await res.text();
+
+let data;
+try {
+  data = JSON.parse(text);
+} catch {
+  console.error("Non-JSON response:", text);
+  alert("Server error — check logs");
+  return;
+}
 
       if (data.url) {
         window.location.href = data.url;
