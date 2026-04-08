@@ -466,7 +466,7 @@ function ProductPage({ products }) {
 
   if (!product) return <p>Product not found</p>;
 
-  const basePath = `/products/${product.sku}/`;
+  
 
   // fallback image system
   const images = [
@@ -493,7 +493,7 @@ function ProductPage({ products }) {
           {images.map((img, i) => (
             <img
   key={i}
-  src={basePath + img}
+  src={img}
   style={thumbStyle}
   onClick={() => setMainImage(i)}
   onError={(e) => {
