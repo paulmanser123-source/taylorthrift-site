@@ -639,7 +639,11 @@ export default function App() {
   
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+  const saved = localStorage.getItem("cart");
+  return saved ? JSON.parse(saved) : [];
+});
+
   const addToCart = (product) => {
   setCart((prev) => [...prev, product]);
 };
@@ -648,7 +652,10 @@ const removeFromCart = (index) => {
   setCart((prev) => prev.filter((_, i) => i !== index));
 };
 
-  useEffect(() => {
+useEffect(() => {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}, [cart]);  
+useEffect(() => {
     fetch("/products.csv")
       .then(res => res.text())
       .then(csv => {
@@ -742,6 +749,7 @@ const removeFromCart = (index) => {
   <Route path="/about" element={<Layout cart={cart}><About /></Layout>} />
   <Route path="/contact" element={<Layout cart={cart}><Contact /></Layout>} />
   <Route path="/donate" element={<Layout cart={cart}><Donate /></Layout>} />
+  <Route path="/success" element={<Layout cart={[]}><Success /></Layout>} />
 </Routes>
   );
 }
