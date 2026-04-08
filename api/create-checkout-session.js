@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-    const { cart } = JSON.parse(req.body);
+    const body = req.body;
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
