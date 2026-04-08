@@ -707,13 +707,17 @@ const removeFromCart = (index) => {
 
   return (
     <Routes>
-  <Route path="/" element={<Layout><Home /></Layout>} />
-  <Route path="/shop" element={<Layout><Shop products={products} /></Layout>} />
+  <Route path="/" element={<Layout cart={cart}><Home /></Layout>} />
+
+  <Route
+    path="/shop"
+    element={<Layout cart={cart}><Shop products={products} /></Layout>}
+  />
 
   <Route
     path="/product/:sku"
     element={
-      <Layout>
+      <Layout cart={cart}>
         <ProductPage
           products={products}
           addToCart={addToCart}
@@ -734,9 +738,9 @@ const removeFromCart = (index) => {
     }
   />
 
-  <Route path="/about" element={<Layout><About /></Layout>} />
-  <Route path="/contact" element={<Layout><Contact /></Layout>} />
-  <Route path="/donate" element={<Layout><Donate /></Layout>} />
+  <Route path="/about" element={<Layout cart={cart}><About /></Layout>} />
+  <Route path="/contact" element={<Layout cart={cart}><Contact /></Layout>} />
+  <Route path="/donate" element={<Layout cart={cart}><Donate /></Layout>} />
 </Routes>
   );
 }
