@@ -22,6 +22,12 @@ function CartPage({ cart, removeFromCart }) {
       alert("Checkout failed");
     }
   };
+
+  const total = cart.reduce(
+    (sum, item) => sum + Number(item.price),
+    0
+  );
+
   return (
     <div style={{ padding: "20px" }}>
       <h1>Your Cart</h1>
@@ -39,10 +45,13 @@ function CartPage({ cart, removeFromCart }) {
       ))}
 
       <h2>Total: £{total.toFixed(2)}</h2>
+
+      {/* ✅ BUTTON USES FUNCTION */}
+      <button onClick={handleCheckout}>
+        Checkout
+      </button>
     </div>
   );
 }
-<button onClick={handleCheckout}>
-  Checkout
-</button>
+
 export default CartPage;
