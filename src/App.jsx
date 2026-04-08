@@ -1,7 +1,7 @@
 import { Routes, Route, Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Papa from "papaparse";
-import CartPage from "./src/CartPage";
+import CartPage from "./CartPage";
 
 
 
@@ -703,33 +703,37 @@ const removeFromCart = (index) => {
 
   return (
     <Routes>
-      <Route path="/" element={<Layout><Home /></Layout>} />
-      <Route path="/shop" element={<Layout><Shop products={products} /></Layout>} />
-      <Route
-  path="/product/:sku"
-  element={
-    <Layout>
-      <ProductPage
-        products={products}
-        addToCart={addToCart}
-      />
-    </Layout>
-  }
-/><Route
-  path="/cart"
-  element={
-    <Layout>
-      <CartPage
-        cart={cart}
-        removeFromCart={removeFromCart}
-      />
-    </Layout>
-  }
-/>
-      <Route path="/about" element={<Layout><About /></Layout>} />
-      <Route path="/contact" element={<Layout><Contact /></Layout>} />
-      <Route path="/donate" element={<Layout><Donate /></Layout>} />
-    </Routes>
+  <Route path="/" element={<Layout><Home /></Layout>} />
+  <Route path="/shop" element={<Layout><Shop products={products} /></Layout>} />
+
+  <Route
+    path="/product/:sku"
+    element={
+      <Layout>
+        <ProductPage
+          products={products}
+          addToCart={addToCart}
+        />
+      </Layout>
+    }
+  />
+
+  <Route
+    path="/cart"
+    element={
+      <Layout>
+        <CartPage
+          cart={cart}
+          removeFromCart={removeFromCart}
+        />
+      </Layout>
+    }
+  />
+
+  <Route path="/about" element={<Layout><About /></Layout>} />
+  <Route path="/contact" element={<Layout><Contact /></Layout>} />
+  <Route path="/donate" element={<Layout><Donate /></Layout>} />
+</Routes>
   );
 }
 
