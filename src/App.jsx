@@ -90,23 +90,15 @@ function Layout({ children, cart }) {
           
             <nav
   style={{
-    colour: "red",
     marginTop: "10px",
     display: "flex",
-    flexWrap: "wrap",
     justifyContent: "center",
-    gap: "10px"
+    gap: "20px",
+    background: "red"
   }}
 >
-  <Link to="/" style={linkStyle}>Home</Link>
-  <Link to="/about" style={linkStyle}>About Us</Link>
-  <Link to="/contact" style={linkStyle}>Contact Us</Link>
-  <Link to="/donate" style={linkStyle}>Make a Donation</Link>
-  <Link to="/cart" style={linkStyle}>
-  Cart ({cart ? cart.length : 0})
-</Link>
-<p>Cart debug: {JSON.stringify(cart)}</p>
-
+  <Link to="/">Home</Link>
+  <Link to="/cart">CART TEST</Link>
 </nav>
           
 
