@@ -102,8 +102,10 @@ function Layout({ children, cart }) {
   <Link to="/contact" style={linkStyle}>Contact Us</Link>
   <Link to="/donate" style={linkStyle}>Make a Donation</Link>
   <Link to="/cart" style={linkStyle}>
-  Cart ({cart?.length || 0})
+  Cart ({cart ? cart.length : 0})
 </Link>
+<p>Cart debug: {JSON.stringify(cart)}</p>
+
 </nav>
           
 
