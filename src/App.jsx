@@ -1,7 +1,7 @@
 import { Routes, Route, Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Papa from "papaparse";
-import CartPage from "./CartPage";
+import CartPage from "./src/CartPage";
 
 
 
