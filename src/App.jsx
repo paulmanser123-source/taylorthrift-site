@@ -90,6 +90,7 @@ function Layout({ children, cart }) {
           
             <nav
   style={{
+    colour: "red",
     marginTop: "10px",
     display: "flex",
     flexWrap: "wrap",
