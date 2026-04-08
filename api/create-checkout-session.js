@@ -8,18 +8,25 @@ export default async function handler(req, res) {
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-    const body = req.body;
+    // ✅ DEFINE CART PROPERLY
+    const cart = req.body.cart;
+
+    if (!cart || !cart.length) {
+      return res.status(400).json({ error: "Cart is empty" });
+    }
+
+    const validCart = cart.filter(item => Number(item.price) > 0);
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
-      line_items: cart.map((item) => ({
+      line_items: validCart.map((item) => ({
         price_data: {
           currency: "gbp",
           product_data: {
-            name: item.name,
+            name: item.name || "Item",
           },
-          unit_amount: Math.round(item.price * 100),
+          unit_amount: Math.round(Number(item.price) * 100),
         },
         quantity: 1,
       })),
@@ -33,4 +40,4 @@ export default async function handler(req, res) {
     console.error("STRIPE ERROR:", err);
     return res.status(500).json({ error: err.message });
   }
-};
+}
