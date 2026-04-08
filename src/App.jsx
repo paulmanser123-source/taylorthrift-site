@@ -1,7 +1,7 @@
 import { Routes, Route, Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Papa from "papaparse";
-
+import CartPage from "./CartPage";
 
 
 
@@ -458,7 +458,7 @@ function Shop({ products }) {
 
 
 
-function ProductPage({ products }) {
+function ProductPage({ products, addToCart }) {
   if (!products || !products.length) return <p>Loading...</p>;
 
   const { sku } = useParams();
@@ -511,6 +511,13 @@ function ProductPage({ products }) {
   <p>Size: {product.size}</p>
   <p>Grade: {product.grade}</p>
 
+  <button
+  style={buttonStyle}
+  onClick={() => addToCart(product)}
+>
+  Add to Cart
+</button>
+  
   {/* BUY BUTTON */}
   <button
   style={buttonStyle}
@@ -623,8 +630,18 @@ function Donate() {
 }
 
 export default function App() {
+  
+  
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true); // ✅ NEW
+  const [loading, setLoading] = useState(true);
+  const [cart, setCart] = useState([]);
+  const addToCart = (product) => {
+  setCart((prev) => [...prev, product]);
+};
+
+const removeFromCart = (index) => {
+  setCart((prev) => prev.filter((_, i) => i !== index));
+};
 
   useEffect(() => {
     fetch("/products.csv")
@@ -688,7 +705,27 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Layout><Home /></Layout>} />
       <Route path="/shop" element={<Layout><Shop products={products} /></Layout>} />
-      <Route path="/product/:sku" element={<Layout><ProductPage products={products} /></Layout>} />
+      <Route
+  path="/product/:sku"
+  element={
+    <Layout>
+      <ProductPage
+        products={products}
+        addToCart={addToCart}
+      />
+    </Layout>
+  }
+/><Route
+  path="/cart"
+  element={
+    <Layout>
+      <CartPage
+        cart={cart}
+        removeFromCart={removeFromCart}
+      />
+    </Layout>
+  }
+/>
       <Route path="/about" element={<Layout><About /></Layout>} />
       <Route path="/contact" element={<Layout><Contact /></Layout>} />
       <Route path="/donate" element={<Layout><Donate /></Layout>} />
