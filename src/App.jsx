@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import Papa from "papaparse";
 import CartPage from "./CartPage";
 import Success from "./Success";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe("pk_test_YOUR_PUBLIC_KEY");
 
 
 
@@ -465,12 +468,19 @@ function Shop({ products }) {
 
 
 function ProductPage({ products, addToCart }) {
-  if (!products || !products.length) return <p>Loading...</p>;
-
   const { sku } = useParams();
-  const product = products.find((p) => p.sku === sku);
 
-  if (!product) return <p>Product not found</p>;
+// ✅ Wait until products are loaded FIRST
+if (!products || !products.length) {
+  return <p>Loading product...</p>;
+}
+
+const product = products.find((p) => p.sku === sku);
+
+// ✅ Only show "not found" after data exists
+if (!product) {
+  return <p>Product not found</p>;
+}
 
   
 
@@ -528,32 +538,22 @@ function ProductPage({ products, addToCart }) {
   <button
   style={buttonStyle}
   onClick={async () => {
-    try {
-      const res = await fetch("/api/create-checkout-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-  product: {
-    title: product.name,
-    price: Number(product.price),
-  },
-}),
-      });
+  try {
+    const res = await fetch("http://localhost:3001/create-checkout-session", {
+      method: "POST",
+    });
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert("Stripe error");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Checkout failed");
-    }
-  }}
+    const stripe = await stripePromise;
+
+    window.location.href = data.url;
+
+  } catch (err) {
+    console.error(err);
+    alert("Checkout failed");
+  }
+}}
 >
   Buy Now
 </button>
